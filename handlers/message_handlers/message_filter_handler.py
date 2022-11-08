@@ -18,7 +18,6 @@ async def delete_message(message: types.Message, time: int):
 @dp.message_handler(content_types=['text', 'photo'])
 async def filter_messages(message: types.Message):
     current_chat_id = message.chat.id
-    print(message)
     if current_chat_id != GROUP_ID:
         return
     sm = SheetManager(gc, SPREADSHEET_ID)
