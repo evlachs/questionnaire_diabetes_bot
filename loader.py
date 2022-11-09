@@ -18,10 +18,3 @@ dp = Dispatcher(bot, storage=storage)
 
 gc = gspread.service_account(SERVICE_ACCOUNT)
 
-cherrypy.config.update({
-    'server.socket_host': WEBHOOK_LISTEN,
-    'server.socket_port': WEBHOOK_PORT,
-    'server.ssl_module': 'builtin',
-    'server.ssl_certificate': WEBHOOK_SSL_CERT,
-    'server.ssl_private_key': WEBHOOK_SSL_PRIVATE
-})

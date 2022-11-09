@@ -6,7 +6,7 @@ from cherry import WebhookServer
 
 from loader import dp
 from utils import set_default_commands
-from conf import WEBHOOK_URL_PATH, WEBHOOK_URL_BASE, WEBHOOK_SSL_CERT, WEBHOOK_PORT, WEBHOOK_LISTEN
+from conf import WEBHOOK_URL_PATH, WEBHOOK_URL_BASE, WEBHOOK_SSL_CERT, WEBHOOK_PORT, WEBHOOK_LISTEN, WEBHOOK_SSL_PRIVATE
 
 import handlers
 
@@ -20,6 +20,14 @@ dp.bot.set_webhook(
     certificate=open(WEBHOOK_SSL_CERT, 'r'),
     drop_pending_updates=True
 )
+
+cherrypy.config.update({
+    'server.socket_host': WEBHOOK_LISTEN,
+    'server.socket_port': WEBHOOK_PORT,
+    'server.ssl_module': 'builtin',
+    'server.ssl_certificate': WEBHOOK_SSL_CERT,
+    'server.ssl_private_key': WEBHOOK_SSL_PRIVATE
+})
 
 
 if __name__ == '__main__':
