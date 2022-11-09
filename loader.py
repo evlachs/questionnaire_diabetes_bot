@@ -1,11 +1,13 @@
 import logging
 
+import gspread
+
+import cherrypy
+
 from aiogram import Bot, Dispatcher
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 
-import gspread
-
-from conf import BOT_TOKEN, SERVICE_ACCOUNT
+from conf import BOT_TOKEN, SERVICE_ACCOUNT, WEBHOOK_LISTEN, WEBHOOK_PORT, WEBHOOK_SSL_CERT, WEBHOOK_SSL_PRIVATE
 
 logging.basicConfig(level=logging.INFO)
 
@@ -15,3 +17,11 @@ storage = MemoryStorage()
 dp = Dispatcher(bot, storage=storage)
 
 gc = gspread.service_account(SERVICE_ACCOUNT)
+
+cherrypy.config.update({
+    'server.socket_host': WEBHOOK_LISTEN,
+    'server.socket_port': WEBHOOK_PORT,
+    'server.ssl_module': 'builtin',
+    'server.ssl_certificate': WEBHOOK_SSL_CERT,
+    'server.ssl_private_key': WEBHOOK_SSL_PRIVATE
+})

@@ -1,4 +1,8 @@
+import cherrypy
+
 from aiogram import executor
+
+from cherry import WebhookServer
 
 from loader import dp
 from utils import set_default_commands
@@ -19,11 +23,12 @@ async def on_startup(dispatcher):
 
 
 if __name__ == '__main__':
-    executor.start_webhook(
-        dp,
-        webhook_path=WEBHOOK_URL_PATH,
-        skip_updates=True,
-        on_startup=on_startup,
-        host=WEBHOOK_LISTEN,
-        port=WEBHOOK_PORT
-    )
+    cherrypy.quickstart(WebhookServer(), WEBHOOK_URL_PATH, {'/': {}})
+    # executor.start_webhook(
+    #     dp,
+    #     webhook_path=WEBHOOK_URL_PATH,
+    #     skip_updates=True,
+    #     on_startup=on_startup,
+    #     host=WEBHOOK_LISTEN,
+    #     port=WEBHOOK_PORT
+    # )
