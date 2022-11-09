@@ -11,20 +11,20 @@ from conf import WEBHOOK_URL_PATH, WEBHOOK_URL_BASE, WEBHOOK_SSL_CERT, WEBHOOK_P
 import handlers
 
 
-async def on_startup(dispatcher):
-    """Sets default commands for the bot, initializes the client, launches the loop with the invite_users function"""
-    await set_default_commands(dispatcher)
-    await dp.bot.delete_webhook()
-    await dp.bot.set_webhook(
-        url=f'{WEBHOOK_URL_BASE}{WEBHOOK_URL_PATH}',
-        certificate=open(WEBHOOK_SSL_CERT, 'r'),
-        drop_pending_updates=True
-    )
+# async def on_startup(dispatcher):
+#     """Sets default commands for the bot, initializes the client, launches the loop with the invite_users function"""
+# set_default_commands(dp)
+dp.bot.delete_webhook()
+dp.bot.set_webhook(
+    url=f'{WEBHOOK_URL_BASE}{WEBHOOK_URL_PATH}',
+    certificate=open(WEBHOOK_SSL_CERT, 'r'),
+    drop_pending_updates=True
+)
 
 
 if __name__ == '__main__':
-    executor.start_polling(
-        dp,
-        on_startup=on_startup,
-    )
+    # executor.start_polling(
+    #     dp,
+    #     on_startup=on_startup,
+    # )
     cherrypy.quickstart(WebhookServer(), WEBHOOK_URL_PATH, {'/': {}})
