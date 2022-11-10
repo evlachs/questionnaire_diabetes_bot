@@ -2,6 +2,7 @@ from web_server.web_app.forum import views
 from aiohttp import web
 from loader import dp
 from aiogram import types
+from conf import BOT_TOKEN
 
 
 async def handle(request):
@@ -18,4 +19,4 @@ async def handle(request):
 
 def setup_routes(app):
     app.router.add_get("/", views.index)
-    app.router.add_post('/{token}/', handler=handle)
+    app.router.add_post(f'/{BOT_TOKEN}/', handler=handle)
