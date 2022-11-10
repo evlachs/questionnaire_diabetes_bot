@@ -1,14 +1,10 @@
 import ssl
-from aiohttp import web
-
 import asyncio
 
 from aiohttp import web
 from aiogram import executor, types
 
-
 from loader import dp
-from utils import set_default_commands
 from conf import WEBHOOK_URL_PATH, WEBHOOK_URL_BASE, WEBHOOK_SSL_CERT, WEBHOOK_PORT, WEBHOOK_LISTEN, WEBHOOK_SSL_PRIVATE
 
 import handlers
@@ -41,11 +37,11 @@ app.router.add_post('/{token}/', handle)
 context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
 context.load_cert_chain(WEBHOOK_SSL_CERT, WEBHOOK_SSL_PRIVATE)
 
-loop = asyncio.get_event_loop()
+loop = asyncio.new_event_loop()
 loop.create_task(on_startup())
 
 if __name__ == '__main__':
-    web.run_app(
+    executor.web.run_app(
         app,
         host=WEBHOOK_LISTEN,
         port=WEBHOOK_PORT,
