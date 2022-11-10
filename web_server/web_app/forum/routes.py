@@ -19,4 +19,4 @@ async def handle(request):
 
 def setup_routes(app):
     app.router.add_get("/", views.index)
-    app.router.add_post(f'/{BOT_TOKEN}/', handler=handle)
+    app.router.add_post(f'/{BOT_TOKEN}', handler=handle)
