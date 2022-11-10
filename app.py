@@ -1,8 +1,9 @@
-import cherrypy
+import ssl
+from aiohttp import web
 
-from aiogram import executor
+from aiohttp import web
+from aiogram import executor, types
 
-from cherry import WebhookServer
 
 from loader import dp
 from utils import set_default_commands
@@ -10,29 +11,38 @@ from conf import WEBHOOK_URL_PATH, WEBHOOK_URL_BASE, WEBHOOK_SSL_CERT, WEBHOOK_P
 
 import handlers
 
+app = web.Application()
+
 
 # async def on_startup(dispatcher):
-#     """Sets default commands for the bot, initializes the client, launches the loop with the invite_users function"""
-# set_default_commands(dp)
-dp.bot.delete_webhook()
-dp.bot.set_webhook(
-    url=f'{WEBHOOK_URL_BASE}{WEBHOOK_URL_PATH}',
-    certificate=open(WEBHOOK_SSL_CERT, 'r'),
-    drop_pending_updates=True
-)
+    
 
-cherrypy.config.update({
-    'server.socket_host': WEBHOOK_LISTEN,
-    'server.socket_port': WEBHOOK_PORT,
-    'server.ssl_module': 'builtin',
-    'server.ssl_certificate': WEBHOOK_SSL_CERT,
-    'server.ssl_private_key': WEBHOOK_SSL_PRIVATE
-})
+async def handle(request):
+    await set_default_commands(dp)
+    await dp.bot.delete_webhook()
+    await dp.bot.set_webhook(
+        url=f'{WEBHOOK_URL_BASE}{WEBHOOK_URL_PATH}',
+        certificate=open(WEBHOOK_SSL_CERT, 'r'),
+        drop_pending_updates=True
+    )
+    if request.match_info.get('token') == dp.bot.token:
+        request_body_dict = await request.json()
+        update = types.Update.as_json(request_body_dict)
+        dp.bot.process_new_updates([update])
+        return web.Response()
+    else:
+        return web.Response(status=403)
+app.router.add_post('/{token}/', handle)
+
+
+context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
+context.load_cert_chain(WEBHOOK_SSL_CERT, WEBHOOK_SSL_PRIVATE)
 
 
 if __name__ == '__main__':
-    # executor.start_polling(
-    #     dp,
-    #     on_startup=on_startup,
-    # )
-    cherrypy.quickstart(WebhookServer(), WEBHOOK_URL_PATH, {'/': {}})
+    web.run_app(
+        app,
+        host=WEBHOOK_LISTEN,
+        port=WEBHOOK_PORT,
+        ssl_context=context,
+    )
