@@ -14,16 +14,18 @@ import handlers
 app = web.Application()
 
 
-# async def on_startup(dispatcher):
-dp.bot.delete_webhook()
-dp.bot.set_webhook(
-    url=f'{WEBHOOK_URL_BASE}{WEBHOOK_URL_PATH}',
-    certificate=open(WEBHOOK_SSL_CERT, 'r'),
-    drop_pending_updates=True
-)
+async def on_startup():
+    await dp.bot.delete_webhook()
+    print("EFFO")
+    await dp.bot.set_webhook(
+        url=f'{WEBHOOK_URL_BASE}{WEBHOOK_URL_PATH}',
+        certificate=open(WEBHOOK_SSL_CERT, 'r'),
+        drop_pending_updates=True
+    )
 
 
 async def handle(request):
+    await on_startup()
     if request.match_info.get('token') == dp.bot.token:
         request_body_dict = await request.json()
         update = types.Update.as_json(request_body_dict)
