@@ -2,11 +2,8 @@ import jinja2
 import aiohttp_jinja2
 
 from aiohttp import web
-from aiogram import types
 
 from web_server.web_app import setup_routes as setup_forum_routes
-
-from loader import dp
 
 
 def setup_routes(application):
