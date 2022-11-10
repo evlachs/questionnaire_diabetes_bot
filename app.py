@@ -28,6 +28,7 @@ async def on_startup():
 
 async def handle(request):
     if request.match_info.get('token') == dp.bot.token:
+        print('HGASGKGKASJGDJKHGASJKHGDKJHGA')
         request_body_dict = await request.json()
         update = types.Update.as_json(request_body_dict)
         dp.bot.process_new_updates([update])
@@ -40,10 +41,10 @@ app.router.add_post('/{token}/', handle)
 context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
 context.load_cert_chain(WEBHOOK_SSL_CERT, WEBHOOK_SSL_PRIVATE)
 
+loop = asyncio.get_event_loop()
+loop.create_task(on_startup())
 
 if __name__ == '__main__':
-    loop = asyncio.get_event_loop()
-    loop.create_task(on_startup())
     web.run_app(
         app,
         host=WEBHOOK_LISTEN,
