@@ -6,7 +6,7 @@ from conf import BOT_TOKEN
 
 
 async def handle(request):
-    print(request, '\n', str(request.json()))
+    print(request, '\n', request.content)
     if request.match_info.get('token') == BOT_TOKEN:
         print('HGASGKGKASJGDJKHGASJKHGDKJHGA')
         request_body_dict = await request.json()
