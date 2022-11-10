@@ -50,4 +50,5 @@ if __name__ == '__main__':
         host=WEBHOOK_LISTEN,
         port=WEBHOOK_PORT,
         ssl_context=context,
+        loop=loop
     )
