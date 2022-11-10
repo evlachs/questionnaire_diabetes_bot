@@ -1,6 +1,6 @@
 import asyncio
 
-from aiogram import executor
+from aiohttp import web
 
 from web_server import app, setup_app
 from loader import dp, context
@@ -24,7 +24,7 @@ loop.create_task(on_startup())
 
 if __name__ == '__main__':
     setup_app(app)
-    executor.web.run_app(
+    web.run_app(
         app,
         host=WEBHOOK_LISTEN,
         port=WEBHOOK_PORT,
