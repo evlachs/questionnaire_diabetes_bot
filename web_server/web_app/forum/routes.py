@@ -6,11 +6,10 @@ from conf import BOT_TOKEN
 
 
 async def handle(request):
-    print(request, '\n', request.match_info.get_info()['path'])
     if request.match_info.get_info()['path'].strip('/') == BOT_TOKEN:
-        print('HGASGKGKASJGDJKHGASJKHGDKJHGA')
         request_body_dict = await request.json()
-        update = types.Update(request_body_dict)
+        update = types.Update.to_python(request_body_dict)
+        print(update)
         await dp.process_update(update)
         return web.Response()
     else:
