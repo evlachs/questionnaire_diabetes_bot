@@ -1,6 +1,8 @@
 import ssl
 from aiohttp import web
 
+import asyncio
+
 from aiohttp import web
 from aiogram import executor, types
 
@@ -25,7 +27,6 @@ async def on_startup():
 
 
 async def handle(request):
-    await on_startup()
     if request.match_info.get('token') == dp.bot.token:
         request_body_dict = await request.json()
         update = types.Update.as_json(request_body_dict)
@@ -41,6 +42,8 @@ context.load_cert_chain(WEBHOOK_SSL_CERT, WEBHOOK_SSL_PRIVATE)
 
 
 if __name__ == '__main__':
+    loop = asyncio.get_event_loop()
+    loop.create_task(on_startup())
     web.run_app(
         app,
         host=WEBHOOK_LISTEN,
