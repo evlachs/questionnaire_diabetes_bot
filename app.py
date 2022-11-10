@@ -2,8 +2,8 @@ import asyncio
 
 from aiohttp import web
 
-from loader import dp, context
 from web_server import app, setup_app
+from loader import dp, context
 from conf import WEBHOOK_URL_PATH, WEBHOOK_URL_BASE, WEBHOOK_SSL_CERT, WEBHOOK_PORT, WEBHOOK_LISTEN
 
 import handlers
