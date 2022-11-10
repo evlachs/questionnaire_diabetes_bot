@@ -8,10 +8,10 @@ from conf import BOT_TOKEN
 async def handle(request):
     if request.match_info.get_info()['path'].strip('/') == BOT_TOKEN:
         request_body_dict = await request.json()
-        # print(request_body_dict)
-        # update = types.Update(request_body_dict)
-        # print(update)
-        await dp.process_update(request_body_dict)
+        print(request_body_dict)
+        update = types.Update(request_body_dict).as_json()
+        print(update)
+        await dp.process_update(update)
         return web.Response()
     else:
         return web.Response(status=403)
