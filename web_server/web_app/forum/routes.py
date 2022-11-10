@@ -11,7 +11,7 @@ async def handle(request):
         print('HGASGKGKASJGDJKHGASJKHGDKJHGA')
         request_body_dict = await request.json()
         update = types.Update(request_body_dict)
-        dp.bot.get_updates(allowed_updates=[update])
+        await dp.bot.get_updates(allowed_updates=[update])
         return web.Response()
     else:
         return web.Response(status=403)
