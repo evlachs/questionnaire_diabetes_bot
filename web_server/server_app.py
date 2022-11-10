@@ -22,18 +22,4 @@ def setup_app(application):
     setup_routes(application)
 
 
-async def handle(request):
-    print(request, '\n', request.match_info.get('token'))
-    if request.match_info.get('token') == dp.bot.token:
-        print('HGASGKGKASJGDJKHGASJKHGDKJHGA')
-        request_body_dict = await request.json()
-        update = types.Update.as_json(request_body_dict)
-        dp.bot.process_new_updates([update])
-        return web.Response()
-    else:
-        return web.Response(status=403)
-
-
 app = web.Application()
-
-app.router.add_post('/{token}/', handler=handle)
