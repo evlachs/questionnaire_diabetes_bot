@@ -2,7 +2,7 @@ import asyncio
 
 from aiogram import executor
 
-from web_server import app
+from web_server import app, setup_app
 from loader import dp, context
 from conf import WEBHOOK_URL_PATH, WEBHOOK_URL_BASE, WEBHOOK_SSL_CERT, WEBHOOK_PORT, WEBHOOK_LISTEN
 
@@ -23,6 +23,7 @@ loop = asyncio.new_event_loop()
 loop.create_task(on_startup())
 
 if __name__ == '__main__':
+    setup_app(app)
     executor.web.run_app(
         app,
         host=WEBHOOK_LISTEN,
