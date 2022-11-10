@@ -2,8 +2,8 @@ import asyncio
 
 from aiohttp import web
 
-from web_server import app, setup_app
 from loader import dp, context
+from web_server import app, setup_app
 from conf import WEBHOOK_URL_PATH, WEBHOOK_URL_BASE, WEBHOOK_SSL_CERT, WEBHOOK_PORT, WEBHOOK_LISTEN
 
 import handlers
@@ -11,7 +11,6 @@ import handlers
 
 async def on_startup():
     await dp.bot.delete_webhook()
-    print("EFFO")
     await dp.bot.set_webhook(
         url=f'{WEBHOOK_URL_BASE}{WEBHOOK_URL_PATH}',
         certificate=open(WEBHOOK_SSL_CERT, 'r'),
