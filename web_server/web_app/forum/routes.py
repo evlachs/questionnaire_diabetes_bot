@@ -1,3 +1,5 @@
+import json
+
 from web_server.web_app.forum import views
 from aiohttp import web
 from loader import dp
@@ -9,7 +11,7 @@ async def handle(request):
     if request.match_info.get_info()['path'].strip('/') == BOT_TOKEN:
         request_body_dict = await request.json()
         print(request_body_dict)
-        update = types.update.Update.as_json(request_body_dict)
+        update = types.update.Update.to_object(request_body_dict)
         print(update)
         await dp.process_update(update)
         return web.Response()
