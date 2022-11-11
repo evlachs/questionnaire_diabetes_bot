@@ -10,8 +10,8 @@ async def handle(request):
         request_body_dict = await request.json()
         print(request_body_dict)
         update = types.update.Update.to_object(request_body_dict)
-        print(type(update))
-        await dp.process_updates(update)
+        print(type(update), update)
+        await dp.process_updates([update])
         return web.Response()
     else:
         return web.Response(status=403)
