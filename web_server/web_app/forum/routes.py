@@ -11,7 +11,7 @@ async def handle(request):
         print(request_body_dict)
         update = types.update.Update.to_object(request_body_dict)
         print(update)
-        await dp.process_updates(update)
+        await dp.process_updates(types.Update(update))
         return web.Response()
     else:
         return web.Response(status=403)
