@@ -15,11 +15,11 @@ async def create_and_load_info(callback_query: types.CallbackQuery, state: FSMCo
         if callback_query.data == 'gen_test':
             data['gift'] = 'Первичная расшифровка генетического теста'
             await dp.bot.send_message(callback_query.from_user.id, MESSAGES['share_contact'])
-            await Form.contact.set()
+            await state.set_state(Form.contact)
         elif callback_query.data == 'consultation':
             data['gift'] = 'Консультация с доктором'
             await dp.bot.send_message(callback_query.from_user.id, MESSAGES['share_contact'])
-            await Form.contact.set()
+            await state.set_state(Form.contact)
         elif callback_query.data == 'menu':
             data['gift'] = 'Примеры меню питания'
             data['contact'] = None
