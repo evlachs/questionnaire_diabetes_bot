@@ -1,7 +1,7 @@
 from web_server.web_app.forum import views
 from aiohttp import web
 from loader import dp
-from aiogram import types
+from aiogram import types, bot
 from conf import BOT_TOKEN
 
 
@@ -10,7 +10,7 @@ async def handle(request):
         request_body_dict = await request.json()
         print(request.match_info.get_info())
         print(request_body_dict)
-        update = types.base.TelegramObject.create(request_body_dict)
+        update = types.base.TelegramObject(request_body_dict)
         print(type(update), update)
         await dp.process_update(request_body_dict)
         return web.Response()
