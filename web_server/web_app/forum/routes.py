@@ -10,7 +10,7 @@ async def handle(request):
         request_body_dict = await request.json()
         print(request.match_info.get_info())
         print(request_body_dict)
-        update = types.base.TelegramObject.to_object(request_body_dict)
+        update = types.update.Update.to_object(request_body_dict)
         print(type(update), update)
         await dp.process_updates([update])
         return web.Response()
