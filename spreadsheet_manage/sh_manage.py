@@ -7,9 +7,9 @@ class SheetManager:
     """
 
     """
-    today = datetime.now().strftime('%d.%m.%Y')
 
     def __init__(self, gc: gspread.client.Client, spreadsheet_id: str):
+        self.today = datetime.now().strftime('%d.%m.%Y')
         self.sh = gc.open_by_key(spreadsheet_id)
         self.users_ws = self.sh.get_worksheet(0)
         self.stat_ws = self.sh.get_worksheet(1)
