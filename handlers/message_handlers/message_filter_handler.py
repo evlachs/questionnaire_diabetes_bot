@@ -22,7 +22,6 @@ async def filter_messages(message: types.Message):
         return
     sm = SheetManager(gc, SPREADSHEET_ID)
     sm.add_new_message()
-    print('new message')
     message_content = set()
     bad_words_content = set(json.load(open('data/bad_words.json')))
     if message.content_type == 'photo':
