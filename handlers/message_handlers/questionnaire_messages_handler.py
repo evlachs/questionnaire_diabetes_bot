@@ -20,7 +20,7 @@ async def start_message_processing(message: types.Message, state: FSMContext):
         data['user_id'] = message.from_user.id
         data['user_firstname'] = message.from_user.first_name
         data['user_lastname'] = message.from_user.last_name
-        data['username'] = '@' + message.from_user.username
+        data['username'] = message.from_user.username
     await bot.send_message(message.chat.id, MESSAGES['set_name'])
     await state.set_state(Form.name)
 
