@@ -22,18 +22,18 @@ async def filter_messages(message: types.Message):
         return
     sm = SheetManager(gc, SPREADSHEET_ID)
     sm.add_new_message()
-    message_content = set()
-    bad_words_content = set(json.load(open('data/bad_words.json')))
-    if message.content_type == 'photo':
-        text = message.caption
-    else:
-        text = message.text
-    if not text:
-        return
-    for word in text.split():
-        translated_word = word.lower().translate(str.maketrans('', '', string.punctuation))
-        message_content.add(translated_word)
-    if message_content.intersection(bad_words_content):
-        msg = await message.reply(MESSAGES['filter'])
-        await message.delete()
-        await delete_message(msg, 3)
+    # message_content = set()
+    # bad_words_content = set(json.load(open('data/bad_words.json')))
+    # if message.content_type == 'photo':
+    #     text = message.caption
+    # else:
+    #     text = message.text
+    # if not text:
+    #     return
+    # for word in text.split():
+    #     translated_word = word.lower().translate(str.maketrans('', '', string.punctuation))
+    #     message_content.add(translated_word)
+    # if message_content.intersection(bad_words_content):
+    #     msg = await message.reply(MESSAGES['filter'])
+    #     await message.delete()
+    #     await delete_message(msg, 3)
