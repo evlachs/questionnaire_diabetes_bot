@@ -16,7 +16,7 @@ async def delete_message(message: types.Message, time: int):
 
 @dp.message_handler(content_types=['new_chat_members', 'left_chat_member'])
 async def del_welcome_message(message: types.Message):
-    await message.delete()
+    print(message)
     sm = SheetManager(gc, SPREADSHEET_ID)
     if message.content_type == 'new_chat_members':
         sm.add_new_member()
