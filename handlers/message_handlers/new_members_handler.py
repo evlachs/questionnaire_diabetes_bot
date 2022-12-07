@@ -20,11 +20,11 @@ async def del_welcome_message(message: types.Message):
     sm = SheetManager(gc, SPREADSHEET_ID)
     if message.content_type == 'new_chat_members':
         sm.add_new_member()
-        msg = await bot.send_message(
-            message.chat.id,
-            MESSAGES['welcome_message'],
-            reply_markup=go_to_quest_keyboard,
-        )
-        await delete_message(msg, 30)
+        # msg = await bot.send_message(
+        #    message.chat.id,
+        #     MESSAGES['welcome_message'],
+        #     reply_markup=go_to_quest_keyboard,
+        # )
+        # await delete_message(msg, 30)
     elif message.content_type == 'left_chat_member':
         sm.add_left_member()
